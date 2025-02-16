@@ -79045,7 +79045,7 @@ $S:45}
 A.ahU.prototype={
 $0(){var s,r=this.a
 if(r.d.gH().zi()){s=t.N
-r.yf(A.ax(["nifEmisor",r.e.a.a,"InvoiceName",r.f.a.a,"fechaEmision",r.r.a.a,"nifDestinatario",r.w.a.a,"nombreDestinatario",r.x.a.a,"Rate",r.y.a.a,"Base",r.z.a.a],s,s))
+r.yf(A.ax(["InvoiceName",r.f.a.a,"Rate",r.y.a.a,"Base",r.z.a.a],s,s))
 r.c.ag(t.Pu).f.VS(B.MD)}},
 $S:0}
 A.ahV.prototype={
