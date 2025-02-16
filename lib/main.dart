@@ -307,11 +307,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final formData = {
-                              'nifEmisor': _nifEmisorController.text,
+                              //'nifEmisor': _nifEmisorController.text,
                               'InvoiceName': _numeroFacturaController.text,//numeroFactura
-                              'fechaEmision': _fechaEmisionController.text,
-                              'nifDestinatario': _nifDestinatarioController.text,
-                              'nombreDestinatario': _nombreDestinatarioController.text,
+                              //'fechaEmision': _fechaEmisionController.text,
+                              //'nifDestinatario': _nifDestinatarioController.text,
+                              //'nombreDestinatario': _nombreDestinatarioController.text,
                               'Rate': _ivaController.text,//iva
                               'Base': _importeController.text,//importe
                             };
