@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Importa dart:convert para manejar base64
 import 'config.dart'; // Importa el archivo de configuración
@@ -20,6 +21,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('es', 'ES'), // Español
+      ],
       home: const MyHomePage(title: 'Registro de Facturas'),
     );
   }
@@ -66,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      locale: const Locale('es', 'ES'), // Establece el idioma del calendario a español
     );
     if (picked != null) {
       setState(() {
@@ -136,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: _buildFormCard(),
+                      child: _buildFormCard(isWideScreen),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -148,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildFormCard(),
+                    _buildFormCard(isWideScreen),
                     const SizedBox(height: 16),
                     _buildQrCard(),
                   ],
@@ -158,9 +168,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildFormCard() {
+  Widget _buildFormCard(bool isWideScreen) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 50.0), // Añade margen horizontal
+      margin: EdgeInsets.symmetric(horizontal: isWideScreen ? 50.0 : 16.0), // Ajusta el margen horizontal
       elevation: 8,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -269,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d{0,2}$')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^(100|[1-9]?[0-9])$')),
                 ],
               ),
               const SizedBox(height: 16),
@@ -307,14 +317,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final formData = {
-                              //'nifEmisor': _nifEmisorController.text,
-                              'InvoiceName': _numeroFacturaController.text,//numeroFactura
-                              //'fechaEmision': _fechaEmisionController.text,
-                              //'nifDestinatario': _nifDestinatarioController.text,
-                              //'nombreDestinatario': _nombreDestinatarioController.text,
-                              'Rate': _ivaController.text,//iva
-                              'Base': _importeController.text,//importe
-                            };
+                        'nifEmisor': _nifEmisorController.text,
+                        'numeroFactura': _numeroFacturaController.text, // numeroFactura
+                        'fechaEmision': _fechaEmisionController.text,
+                        'nifDestinatario': _nifDestinatarioController.text,
+                        'nombreDestinatario': _nombreDestinatarioController.text,
+                        'iva': _ivaController.text, // iva
+                        'importe': _importeController.text, // importe
+                      };
                       nback(formData);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Procesando datos')),
