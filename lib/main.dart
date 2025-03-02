@@ -57,8 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isTestMode = false;
 
   Future<void> nback(Map<String, String> formData) async {
-    final url = Uri.parse(Config.endpointUrl).replace(queryParameters: formData);
-    final response = await http.get(url);
+    final url = Uri.parse(Config.endpointUrl);
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(formData),
+    );
 
     if (response.statusCode == 200) {
       setState(() {
@@ -86,10 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _generateTestValues() {
     final now = DateTime.now();
-    _nifEmisorController.text = 'A12345678';
+    _nifEmisorController.text = 'B91624676';
     _numeroFacturaController.text = 'FACT-${now.hour}${now.minute}${now.second}';
     _fechaEmisionController.text = DateFormat('yyyy-MM-dd').format(now);
-    _nifDestinatarioController.text = 'B87654321';
+    _nifDestinatarioController.text = 'J03073228';
     _nombreDestinatarioController.text = 'Test Destinatario';
     _ivaController.text = '21';
     _importeController.text = '1000';
